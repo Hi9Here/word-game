@@ -16,7 +16,7 @@
       <h1>upload a pic of:</h1>
       <ul>
         <template is="dom-repeat" items="{{words}}">
-          <li style="display:inline">[[item]]</li>
+          <li style="display:inline"><template is="dom-if" if="[[index]]"> | </template>[[item]]</li>
         </template>
       </ul>
       <file-upload ></file-upload>
