@@ -68,7 +68,6 @@
     },
     getItems: function(uid, filesID) {
       var that = this
-      var storage = firebase.storage()
       var db = firebase.firestore()
       
       var index
@@ -77,7 +76,7 @@
           var words = file.data().vision[0].labelAnnotations.map(function(label) {
             return label.description
           })
-          storage.child().getDownloadURL(file.data().path).then(function(url) {
+          firebase.storage().child(file.data().path).getDownloadURL().then(function(url) {
             that.push("items",{url: url, words: words})
           })
         })
