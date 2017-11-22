@@ -89,7 +89,7 @@
               for (thatWordsIndex = that.words.length - 1; thatWordsIndex >= 0; --thatWordsIndex) {
                 if (that.words[thatWordsIndex].toLowerCase() === words[wordIndex].toLowerCase()) {
                   
-                  that.set("words" that.words.reduce(function (a, c) {
+                  that.set("words", that.words.reduce(function (a, c) {
                     if (c.toLowerCase() !== words[wordIndex].toLowerCase()) {
                       a.push(c)
                     }
