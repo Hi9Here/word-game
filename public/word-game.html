@@ -8,28 +8,69 @@
 -->
 <dom-module id="word-game">
   <template>
-    <style>:host {display:block;}</style>
-    
-    <firebase-ui-auth user="{{user}}"></firebase-ui-auth>
-    far
-    peace
-    resolute
-    sturdy
-    whispering
-    bright
-    assorted
-    pie
-    uppity
-    unwritten
-    wrist
-    mark
-    <file-upload></file-upload>
-    
-    [[user.uid]]
+    <template is="dom-repeat" items="{{words}}">
+      [[item]]
+    </template>
+    <template is="dom-if" if="[[got]]">
+      You have got
+      <template is="dom-repeat" items="{{got}}">[[item]]</template>
+    </template>
+
+    <template is="dom-if" if="[[items]]">
+      pics so far
+      <template is="dom-repeat" items="{{items}}">
+        <div>
+          <img src="[[item.url]]" style="float:left;max-height:200px"/>
+          [[item.words]]
+        </div>
+      </template>
+    </template> 
   </template>
 </dom-module>
 <script>
   Polymer({
     is: "word-game",
+    properties:{
+      words:{
+        type:Array,
+        value: ["cup","computer","joy","angry","floor","hand","bicycle"],
+      },
+      _filesID:{
+        computed:"getFiles(user.uid)",
+      },
+      _getItems: {
+        computed:"getItems(user.uid, filesID)",
+      },
+      items:{
+        value: []
+      },
+    },
+    getFiles: function(uid){
+      var that = this
+      var db = firebase.firestore()
+      var user = db.collection("Users").doc(uid)
+      // set user name
+      user.onSnapshot(function(doc) {
+        console.log("Current data: ", doc && doc.data())
+        that.filesID = Object.keys(doc.data().files)
+      })
+    },
+    getItems: function(uid, filesID) {
+      var that = this
+      var storage = firebase.storage()
+      var db = firebase.firestore()
+      
+      var index
+      for (index = filesID.length - 1; index >= 0; --index) {
+        db.collection("files").doc(filesID[index]).get().then(function(file) {
+          var words = file.data().vision[0].labelAnnotations.map(function(label) {
+            return label.description
+          })
+          storage.child().getDownloadURL(file.data().path).then(function(url) {
+            that.push("items",{url: url, words: words})
+          })
+        })
+      }
+    },
   })
 </script>
