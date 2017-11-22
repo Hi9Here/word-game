@@ -1,4 +1,5 @@
 # word-game
+[demo](https://my-app-8e6a4.firebaseapp.com/)
 ## steps to setting up this web app
 
 * login and set up a new project [here](https://console.firebase.google.com)
