@@ -119,3 +119,6 @@ const generateThumbnail = functions.storage.object().onChange(event => {
 // END OF NEW IMAGE RESIZER
 
 // // END OF IMAGE RESIZING FUNCTION
+ module.exports = {
+   generateThumbnail,
+ }
