@@ -76,7 +76,7 @@
           var words = file.data().vision[0].labelAnnotations.map(function(label) {
             return label.description
           })
-          firebase.storage().child(file.data().path).getDownloadURL().then(function(url) {
+          firebase.storage().ref().child(file.data().path).getDownloadURL().then(function(url) {
             that.push("items",{url: url, words: words})
           })
         })
