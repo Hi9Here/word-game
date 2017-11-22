@@ -90,7 +90,9 @@
                 if (that.words[thatWordsIndex].toLowerCase() === words[wordIndex].toLowerCase()) {
                   
                   that.set("words" that.words.reduce(function (a, c) {
-                    a.push(c)
+                    if (c.toLowerCase() !== words[wordIndex].toLowerCase()) {
+                      a.push(c)
+                    }
                     return a
                   }, []))
                   
