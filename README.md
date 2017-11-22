@@ -6,3 +6,17 @@
 * in database turn on firestore stuff
 * upgrade to pay as you go
 * deploy
+
+### note:
+#### storage rules
+    service firebase.storage {
+      match /b/{bucket}/o {
+        // Files look like: "<UID>/path/to/file.txt"
+        match /{userId}/{allPaths=**} {
+          allow read, write: if request.auth.uid == userId;
+        }
+        match /{allPaths=**} {
+          allow read;
+        }
+      }
+    }
