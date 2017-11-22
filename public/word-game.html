@@ -23,12 +23,12 @@
     </template>
 
     <template is="dom-if" if="[[got.length]]">
-      <h3>You have got</h3>
+      <h1>You have got</h1>
       <template is="dom-repeat" items="{{got}}">[[item]]<br></template>
     </template>
     
     <template is="dom-if" if="[[items.length]]">
-      pics so far
+      <h1>pics so far</h1>
       <template is="dom-repeat" items="{{items}}">
         <div>
           <img src="[[item.url]]" style="max-height:200px"/>
@@ -44,7 +44,7 @@
     properties:{
       words:{
         type: Array,
-        value: ["cup","computer","yellow","joy","angry","floor","hand","bicycle","light"],
+        value: ["cup","computer","software","yellow","joy","angry","floor","hand","bicycle","light"],
       },
       _filesID:{
         computed:"getFiles(user.uid)",
