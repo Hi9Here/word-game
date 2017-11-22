@@ -89,7 +89,10 @@
               for (thatWordsIndex = that.words.length - 1; thatWordsIndex >= 0; --thatWordsIndex) {
                 if (that.words[thatWordsIndex].toLowerCase() === words[wordIndex].toLowerCase()) {
                   
-                  that.words.splice(thatWordsIndex,1)
+                  that.set("words" that.words.reduce(function (a, c) {
+                    a.push(c)
+                    return a
+                  }, []))
                   
                   that.push("got",words[wordIndex])
                 }               
