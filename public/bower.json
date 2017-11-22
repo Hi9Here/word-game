@@ -10,6 +10,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#~1.9.3",
     "firebase-ui-auth": "marcus7777/firebase-ui-auth",
+    "file-upload": "marcus7777/file-upload",
     "mdl-template-dash": "*"
   },
   "devDependencies": {
