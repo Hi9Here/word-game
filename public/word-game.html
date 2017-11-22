@@ -22,12 +22,12 @@
       <file-upload ></file-upload>
     </template>
 
-    <template is="dom-if" if="[[got]]">
+    <template is="dom-if" if="[[got.length]]">
       <h3>You have got</h3>
       <template is="dom-repeat" items="{{got}}">[[item]]<br></template>
     </template>
     
-    <template is="dom-if" if="[[items]]">
+    <template is="dom-if" if="[[items.length]]">
       pics so far
       <template is="dom-repeat" items="{{items}}">
         <div>
