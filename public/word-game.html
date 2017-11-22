@@ -1,0 +1,22 @@
+<link rel="import" href="../mdl-template-dash/mdl-template-dash.html">
+<link rel="import" href="../firebase-ui-auth/firebase-ui-auth.html">
+<link rel="import" href="../polymer/polymer.html">
+<!--
+  `<word-game></word-game>` Word game using firebase as a backend and Google Cloud vision for input.
+  @demo demo.html
+-->
+<dom-module id="word-game">
+  <template>
+    <style>:host {display:block;}</style>
+    
+    <firebase-ui-auth user="{{user}}"></firebase-ui-auth>
+    <mdl-template-dash>
+    </mdl-template-dash>
+    [[user.uid]]
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "word-game",
+  })
+</script>

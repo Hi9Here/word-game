@@ -1,0 +1,19 @@
+{
+  "name": "word-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "word-game.html",
+  "keywords": [
+    "polymer",
+    "web-components"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~1.9.3",
+    "firebase-ui-auth": "*",
+    "mdl-template-dash": "*"
+  },
+  "devDependencies": {
+    "iron-test-helpers": "*",
+    "web-component-tester": "^5.0.0"
+  }
+}
