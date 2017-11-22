@@ -31,7 +31,7 @@
       pics so far
       <template is="dom-repeat" items="{{items}}">
         <div>
-          <img src="[[item.url]]" style="float:left;max-height:200px"/>
+          <img src="[[item.url]]" style="max-height:200px"/>
           [[item.words]]
         </div>
       </template>
@@ -43,8 +43,8 @@
     is: "word-game",
     properties:{
       words:{
-        type:Array,
-        value: ["cup","computer","joy","angry","floor","hand","bicycle"],
+        type: Array,
+        value: ["cup","computer","joy","angry","floor","hand","bicycle","light"],
       },
       _filesID:{
         computed:"getFiles(user.uid)",
@@ -84,7 +84,7 @@
               for (thatWordsIndex = that.words.length - 1; thatWordsIndex >= 0; --thatWordsIndex) {
                 if (that.words[thatWordsIndex].toLowerCase() === words[wordsIndex].toLowerCase()) {
                   that.set("words",that.words.splice(thatWordsIndex,1))
-                  that.push("got",words[wordsIndex])
+                  that.push("got",words[wordIndex])
                 }               
               }
             }
