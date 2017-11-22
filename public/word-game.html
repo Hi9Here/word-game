@@ -72,7 +72,7 @@
     getItems: function(uid, filesID) {
       var that = this
       var db = firebase.firestore()
-      
+      var items = []
       var index
       for (index = filesID.length - 1; index >= 0; --index) {
         db.collection("files").doc(filesID[index]).get().then(function(file) {
@@ -80,13 +80,16 @@
             return label.description
           })
           firebase.storage().ref().child(file.data().path).getDownloadURL().then(function(url) {
-            that.push("items",{url: url, words: words})
+            items.push({url: url, words: words})
+            that.set("items", items)
             var wordIndex
             var thatWordsIndex
             for (wordIndex = words.length - 1; wordIndex >= 0; --wordIndex) {
               for (thatWordsIndex = that.words.length - 1; thatWordsIndex >= 0; --thatWordsIndex) {
                 if (that.words[thatWordsIndex].toLowerCase() === words[wordIndex].toLowerCase()) {
+                  
                   that.words.splice(thatWordsIndex,1)
+                  
                   that.push("got",words[wordIndex])
                 }               
               }
