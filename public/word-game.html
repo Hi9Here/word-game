@@ -10,7 +10,7 @@
   <template>
     <style>:host {display:block;}</style>
    
-    <firebase-ui-auth hidden="[[user.uid]]" user="{{user}}"></firebase-ui-auth>
+    <firebase-ui-auth signIn='["GoogleAuthProvider"]' hidden="[[user.uid]]" user="{{user}}"></firebase-ui-auth>
 
     <template is="dom-if" if="[[user.uid]]">
       upload a pic of
