@@ -9,7 +9,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#~1.9.3",
-    "firebase-ui-auth": "*",
+    "firebase-ui-auth": "marcus7777/firebase-ui-auth",
     "mdl-template-dash": "*"
   },
   "devDependencies": {
