@@ -9,11 +9,6 @@
 <dom-module id="word-game">
   <template>
     <style>:host {display:block;}</style>
-    
-    <template is="dom-if" if="[[got]]">
-      You have got
-      <template is="dom-repeat" items="{{got}}">[[item]]<br></template>
-    </template>
    
     <firebase-ui-auth hidden="[[user.uid]]" user="{{user}}"></firebase-ui-auth>
 
@@ -27,6 +22,11 @@
       <file-upload ></file-upload>
     </template>
 
+    <template is="dom-if" if="[[got]]">
+      You have got
+      <template is="dom-repeat" items="{{got}}">[[item]]<br></template>
+    </template>
+    
     <template is="dom-if" if="[[items]]">
       pics so far
       <template is="dom-repeat" items="{{items}}">
@@ -81,7 +81,8 @@
           })
           firebase.storage().ref().child(file.data().path).getDownloadURL().then(function(url) {
             items.push({url: url, words: words})
-            that.set("items", items)
+            that.set("items", items.map(function(x) {return x}))
+            
             var wordIndex
             var thatWordsIndex
             for (wordIndex = words.length - 1; wordIndex >= 0; --wordIndex) {
