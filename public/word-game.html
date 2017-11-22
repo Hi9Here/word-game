@@ -12,7 +12,7 @@
     
     <template is="dom-if" if="[[got]]">
       You have got
-      <template is="dom-repeat" items="{{got}}">[[item]]</template>
+      <template is="dom-repeat" items="{{got}}">[[item]]<br></template>
     </template>
    
     <firebase-ui-auth hidden="[[user.uid]]" user="{{user}}"></firebase-ui-auth>
@@ -78,6 +78,16 @@
           })
           firebase.storage().child(file.data().path).getDownloadURL().then(function(url) {
             that.push("items",{url: url, words: words})
+            var wordIndex
+            var thatWordsIndex
+            for (wordIndex = words.length - 1; wordIndex >= 0; --wordIndex) {
+              for (thatWordsIndex = that.words.length - 1; thatWordsIndex >= 0; --thatWordsIndex) {
+                if (that.words[thatWordsIndex].toLowerCase() === words[wordsIndex].toLowerCase()) {
+                  that.set("words",that.words.splice(thatWordsIndex,1))
+                  that.push("got",words[wordsIndex])})
+                }               
+              }
+            }
           })
         })
       }
