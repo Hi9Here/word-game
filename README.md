@@ -4,7 +4,7 @@
 
 * login and set up a new project [here](https://console.firebase.google.com)
 * in authorisation turn on Google
-* in database turn on firestore stuff
+* in database turn on firestore
 * upgrade to pay as you go
 * add rules:
 
@@ -31,5 +31,12 @@ service cloud.firestore {
     } 
   }
 }
+* run:
 
-* deploy
+    cd functions/
+    npm install
+    cd ../public/
+    bower up
+    firebase login
+    firebase use --add
+    firebase deploy
