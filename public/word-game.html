@@ -83,7 +83,7 @@
             for (wordIndex = words.length - 1; wordIndex >= 0; --wordIndex) {
               for (thatWordsIndex = that.words.length - 1; thatWordsIndex >= 0; --thatWordsIndex) {
                 if (that.words[thatWordsIndex].toLowerCase() === words[wordIndex].toLowerCase()) {
-                  that.set("words",that.words.splice(thatWordsIndex-1,1))
+                  that.words.splice(thatWordsIndex,1)
                   that.push("got",words[wordIndex])
                 }               
               }
