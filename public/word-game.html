@@ -13,12 +13,12 @@
     <firebase-ui-auth sign-in='["GoogleAuthProvider"]' hidden="[[user.uid]]" user="{{user}}"></firebase-ui-auth>
 
     <template is="dom-if" if="[[user.uid]]">
-      upload a pic of
-      <template is="dom-repeat" items="{{words}}">
-        <div>
-          [[item]]
-        </div>
-      </template>
+      <h1>upload a pic of:</h1>
+      <ul>
+        <template is="dom-repeat" items="{{words}}">
+          <li style="display:inline">[[item]]</li>
+        </template>
+      </ul>
       <file-upload ></file-upload>
     </template>
 
