@@ -9,8 +9,13 @@
     "logs": "firebase functions:log"
   },
   "dependencies": {
-    "firebase-admin": "~5.4.2",
-    "firebase-functions": "^0.7.1"
+    "firebase-functions": "^0.7.1",
+    "@google-cloud/storage": "^1.4.0",
+    "child-process-promise": "^2.2.0",
+    "firebase-admin": "^5.4.3",
+    "mkdirp": "^0.5.1",
+    "mkdirp-promise": "^4.0.0",
+    "node-cloud-vision-api": "^0.2.0"
   },
   "private": true
 }
