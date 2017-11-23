@@ -61,7 +61,6 @@
       var user = db.collection("Users").doc(uid)
       // set user name
       user.onSnapshot(function(doc) {
-        console.log("Current data: ", doc && doc.data())
         if (doc.exists && doc.data().files) {
           that.filesID = Object.keys(doc.data().files)
         }

@@ -83,6 +83,9 @@ const generateThumbnail = functions.storage.object().onChange(event => {
     const thumbFilePath = path.join(path.dirname(filePath), thumbFileName)
     const uid = filePath.split("/")[0]
     const hash = filePath.split("/")[1]
+    var theHash = {}
+    theHash[hash] = true
+    db.collection("Users").doc(uid).set({files: theHash}, {merge: true})
     db.collection("files").doc(hash).get().then(doc => {
       if (!doc.exists || (doc && doc.data() && !doc.data().vision)) {
         vision.init({auth: 'AIzaSyCKbNZem3UKzkWy8NST2Al7gKWpAXFduWU'})
@@ -96,16 +99,10 @@ const generateThumbnail = functions.storage.object().onChange(event => {
             new vision.Feature('IMAGE_PROPERTIES', 10),
           ]
         })
-
         // send single request
         vision.annotate(reqV).then((resV) => {
           // handling response
           console.log(JSON.stringify(resV.responses))
-          
-          var theHash = {}
-          theHash[hash] = true
-
-          db.collection("Users").doc(uid).set({files: theHash}, {merge: true})
           db.collection("files").doc(hash).set({vision: resV.responses}, {merge: true})
 
         }, (e) => {
