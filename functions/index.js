@@ -78,7 +78,6 @@ const generateThumbnail = functions.storage.object().onChange(event => {
     return spawn('convert', [tempFilePath, '-thumbnail', '500x500>', tempFilePath])
   }).then(() => {
     console.log('Thumbnail created at', tempFilePath)
-     tempFilePath 
     // We add a 'thumb_' prefix to thumbnails file name. That's where we'll upload the thumbnail.
     const thumbFileName = `thumb_${fileName}`
     const thumbFilePath = path.join(path.dirname(filePath), thumbFileName)
@@ -94,6 +93,7 @@ const generateThumbnail = functions.storage.object().onChange(event => {
           features: [
         //    new vision.Feature('FACE_DETECTION', 4),
             new vision.Feature('LABEL_DETECTION', 10),
+            new vision.Feature('IMAGE_PROPERTIES', 10),
           ]
         })
 
