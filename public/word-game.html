@@ -62,7 +62,9 @@
       // set user name
       user.onSnapshot(function(doc) {
         console.log("Current data: ", doc && doc.data())
-        that.filesID = Object.keys(doc.data().files)
+        if (doc.exists && doc.data().files) {
+          that.filesID = Object.keys(doc.data().files)
+        }
       })
     },
     getItems: function(uid, filesID) {
