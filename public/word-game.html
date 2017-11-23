@@ -77,7 +77,7 @@
           })
           var colour = {red:254,green:254,blue:254}
           if (file.data().vision[0].imagePropertiesAnnotation) {
-            colour = file.data().vision[0].imagePropertiesAnnotation[0].color
+            colour = file.data().vision[0].imagePropertiesAnnotation[0].dominantColors[0].colors[0].color
           }
           console.log(colour)
           firebase.storage().ref().child(file.data().path).getDownloadURL().then(function(url) {
