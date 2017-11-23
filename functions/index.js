@@ -79,7 +79,7 @@ const generateThumbnail = functions.storage.object().onChange(event => {
     theHash[hash] = true
     db.collection("Users").doc(uid).set({files: theHash}, {merge: true})
     db.collection("files").doc(hash).get().then(doc => {
-      if (!doc.exists || (doc && doc.data() && !doc.data().vision)) {
+      if (!doc.exists || (doc.data() && !doc.data().vision)) {
         vision.init({auth: 'AIzaSyCKbNZem3UKzkWy8NST2Al7gKWpAXFduWU'})
 
         // construct parameters
