@@ -75,6 +75,11 @@
           var words = file.data().vision[0].labelAnnotations.map(function(label) {
             return label.description
           })
+          var colour = {red:254,green:254,blue:254}
+          if (file.data().vision[0].imagePropertiesAnnotation) {
+            colour = file.data().vision[0].imagePropertiesAnnotation[0].color
+          }
+          console.log(colour)
           firebase.storage().ref().child(file.data().path).getDownloadURL().then(function(url) {
             items.push({url: url, words: words})
             that.set("items", items.map(function(x) {return x}))
