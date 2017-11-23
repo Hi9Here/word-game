@@ -73,11 +73,14 @@
       var index
       for (index = filesID.length - 1; index >= 0; --index) {
         db.collection("files").doc(filesID[index]).get().then(function(file) {
-          var words = file.data().vision[0].labelAnnotations.map(function(label) {
-            return label.description
-          })
+          var words = ["loading"]
+          if (file.data().vision && file.data().vision[0].labelAnnotations) {
+            words = file.data().vision[0].labelAnnotations.map(function(label) {
+              return label.description
+            })
+          }
           var colour = {red:254,green:254,blue:254}
-          if (file.data().vision[0].imagePropertiesAnnotation) {
+          if (file.data().vision && file.data().vision[0].imagePropertiesAnnotation) {
             colour = file.data().vision["0"].imagePropertiesAnnotation.dominantColors.colors["0"].color
           }
           firebase.storage().ref().child(file.data().path).getDownloadURL().then(function(url) {
