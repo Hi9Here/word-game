@@ -29,7 +29,7 @@
     <template is="dom-if" if="[[items.length]]">
       <h1>Uploaded pictures so far</h1>
       <template is="dom-repeat" items="{{items}}">
-        <img src="[[item.url]]" style="max-height:100px" title="[[item.words]]"/>
+        <img src="[[item.url]]" style$="max-height:100px;border: rgb([[item.colour.red]],[[item.colour.green]],[[item.colour.blue]]) solid;" title="[[item.words]]"/>
       </template>
     </template> 
   </template>
@@ -77,11 +77,10 @@
           })
           var colour = {red:254,green:254,blue:254}
           if (file.data().vision[0].imagePropertiesAnnotation) {
-            colour = file.data().vision[0].imagePropertiesAnnotation[0].dominantColors[0].colors[0].color
+            colour = file.data().vision["0"].imagePropertiesAnnotation.dominantColors.colors["0"].color
           }
-          console.log(colour)
           firebase.storage().ref().child(file.data().path).getDownloadURL().then(function(url) {
-            items.push({url: url, words: words})
+            items.push({url: url, words: words, colour: colour})
             that.set("items", items.map(function(x) {return x}))
             
             var wordIndex

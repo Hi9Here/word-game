@@ -114,9 +114,12 @@ const generateThumbnail = functions.storage.object().onChange(event => {
       } else {
         console.log('got it!', doc.data().vision)
       }
+
+    }).then(() => {
+      // Uploading the thumbnail.
+      return bucket.upload(tempFilePath, { destination: thumbFilePath })
+      
     })
-    // Uploading the thumbnail.
-    return bucket.upload(tempFilePath, { destination: thumbFilePath })
     // Once the thumbnail has been uploaded delete the local file to free up disk space.
   }).then(() => fs.unlinkSync(tempFilePath))
   // [END thumbnailGeneration]
