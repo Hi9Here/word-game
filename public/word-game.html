@@ -62,7 +62,7 @@
       // set user name
       user.onSnapshot(function(doc) {
         if (doc.exists && doc.data().files) {
-          that.filesID = Object.keys(doc.data().files)
+          that.set("filesID", Object.keys(doc.data().files))
         }
       })
     },
