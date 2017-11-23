@@ -116,9 +116,9 @@ const generateThumbnail = functions.storage.object().onChange(event => {
       // Uploading the thumbnail.
       return bucket.upload(tempFilePath, { destination: thumbFilePath })
       
-    }).catch((e) => console.log(e))
+    }).then(() => fs.unlinkSync(tempFilePath)).catch((e) => console.log(e))
     // Once the thumbnail has been uploaded delete the local file to free up disk space.
-  }).then(() => fs.unlinkSync(tempFilePath))
+  }).catch((e) => console.log(e))
   // [END thumbnailGeneration]
 })
 // [END generateThumbnail]
