@@ -94,7 +94,7 @@ const generateThumbnail = functions.storage.object().onChange(event => {
         const reqV = new vision.Request({
           image: new vision.Image(tempFilePath),
           features: [
-        //    new vision.Feature('FACE_DETECTION', 4),
+            new vision.Feature('FACE_DETECTION', 4),
             new vision.Feature('LABEL_DETECTION', 10),
             new vision.Feature('IMAGE_PROPERTIES', 10),
           ]
@@ -104,6 +104,8 @@ const generateThumbnail = functions.storage.object().onChange(event => {
           // handling response
           console.log(JSON.stringify(resV.responses))
           db.collection("files").doc(hash).set({vision: resV.responses}, {merge: true})
+          theHash[uid] = 1
+          db.collection("Users").doc(uid).set({files: theHash}, {merge: true})
 
         }, (e) => {
           console.log('Error: ', e)
