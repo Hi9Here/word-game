@@ -7,14 +7,12 @@ const spawn = require('child-process-promise').spawn
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
+// vision Modules
 const vision = require('node-cloud-vision-api')
 
-// Initialize the app
+// Initialize the db
 admin.initializeApp(functions.config().firebase);
-
-// This is the datastore
 const db = admin.firestore()
-// NEW IMAGE RESIZER
 
 'use strict';
 
@@ -24,10 +22,7 @@ const db = admin.firestore()
  * When an image is uploaded in the Storage bucket We generate a thumbnail automatically using
  * ImageMagick.
  */
-// [START generateThumbnailTrigger]
 const generateThumbnail = functions.storage.object().onChange(event => {
-  // [END generateThumbnailTrigger]
-  // [START eventAttributes]
   const object = event.data; // The Storage object.
 
   const fileBucket = object.bucket; // The Storage bucket that contains the file.
@@ -35,9 +30,7 @@ const generateThumbnail = functions.storage.object().onChange(event => {
   const contentType = object.contentType; // File content type.
   const resourceState = object.resourceState; // The resourceState is 'exists' or 'not_exists' (for file/folder deletions).
   const metageneration = object.metageneration; // Number of times metadata has been generated. New objects have a value of 1.
-  // [END eventAttributes]
 
-  // [START stopConditions]
   // Exit if this is triggered on a file that is not an image.
   if (!contentType.startsWith('image/')) {
     console.log('This is not an image.')
@@ -64,7 +57,6 @@ const generateThumbnail = functions.storage.object().onChange(event => {
     console.log('This is a metadata change event.')
     return 3
   }
-  // [END stopConditions]
 
   // [START thumbnailGeneration]
   // Download file from bucket.
@@ -124,9 +116,7 @@ const generateThumbnail = functions.storage.object().onChange(event => {
   // [END thumbnailGeneration]
 })
 // [END generateThumbnail]
-// END OF NEW IMAGE RESIZER
 
-// // END OF IMAGE RESIZING FUNCTION
- module.exports = {
-   generateThumbnail,
- }
+module.exports = {
+  generateThumbnail,
+}
