@@ -80,35 +80,41 @@ const generateThumbnail = functions.storage.object().onChange(event => {
     console.log('Thumbnail created at', tempFilePath)
      tempFilePath 
     // We add a 'thumb_' prefix to thumbnails file name. That's where we'll upload the thumbnail.
-    const thumbFileName = `thumb_${fileName}`;
-    const thumbFilePath = path.join(path.dirname(filePath), thumbFileName);
-    vision.init({auth: 'AIzaSyCKbNZem3UKzkWy8NST2Al7gKWpAXFduWU'})
+    const thumbFileName = `thumb_${fileName}`
+    const thumbFilePath = path.join(path.dirname(filePath), thumbFileName)
+    const uid = filePath.split("/")[0]
+    const hash = filePath.split("/")[1]
+    db.collection("files").doc(hash).get().then(doc => {
+      if (!doc.exists || (doc && doc.data() && !doc.data().vision)) {
+        vision.init({auth: 'AIzaSyCKbNZem3UKzkWy8NST2Al7gKWpAXFduWU'})
 
-    // construct parameters
-    const reqV = new vision.Request({
-      image: new vision.Image(tempFilePath),
-      features: [
-    //    new vision.Feature('FACE_DETECTION', 4),
-        new vision.Feature('LABEL_DETECTION', 10),
-      ]
+        // construct parameters
+        const reqV = new vision.Request({
+          image: new vision.Image(tempFilePath),
+          features: [
+        //    new vision.Feature('FACE_DETECTION', 4),
+            new vision.Feature('LABEL_DETECTION', 10),
+          ]
+        })
+
+        // send single request
+        vision.annotate(reqV).then((resV) => {
+          // handling response
+          console.log(JSON.stringify(resV.responses))
+          
+          var theHash = {}
+          theHash[hash] = true
+
+          db.collection("Users").doc(uid).set({files: theHash}, {merge: true})
+          db.collection("files").doc(hash).set({vision: resV.responses}, {merge: true})
+
+        }, (e) => {
+          console.log('Error: ', e)
+        })
+      } else {
+        console.log('got it!', doc.data().vision)
+      }
     })
-
-    // send single request
-    vision.annotate(reqV).then((resV) => {
-      // handling response
-      console.log(JSON.stringify(resV.responses))
-      console.log(filePath)
-      var uid = filePath.split("/")[0]
-      var hash = filePath.split("/")[1]
-      var theHash = {}
-      theHash[hash] = true
-
-      db.collection("Users").doc(uid).set({files: theHash}, {merge: true})
-      db.collection("files").doc(hash).set({vision: resV.responses}, {merge: true})
-
-    }, (e) => {
-      console.log('Error: ', e)
-    }) 
     // Uploading the thumbnail.
     return bucket.upload(tempFilePath, { destination: thumbFilePath })
     // Once the thumbnail has been uploaded delete the local file to free up disk space.
