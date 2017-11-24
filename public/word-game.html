@@ -29,7 +29,8 @@
     <template is="dom-if" if="[[items.length]]">
       <h1>Uploaded pictures so far</h1>
       <template is="dom-repeat" items="{{items}}">
-        <img src="[[item.url]]" style$="max-height:100px;border: rgb([[item.colour.red]],[[item.colour.green]],[[item.colour.blue]]) solid;" title="[[item.words]]"/>
+        <img src="[[item.url]]" style$="max-height:100px;border:rgb([[item.colour.red]],[[item.colour.green]],[[item.colour.blue]]) solid" title="[[item.words]]"/>
+        [[item.matching]]
       </template>
     </template> 
   </template>
