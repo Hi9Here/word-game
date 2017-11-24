@@ -84,9 +84,7 @@
             colour = file.data().vision["0"].imagePropertiesAnnotation.dominantColors.colors["0"].color
           }
           firebase.storage().ref().child(file.data().path).getDownloadURL().then(function(url) {
-            items.push({url: url, words: words, colour: colour})
-            that.set("items", items.map(function(x) {return x}))
-            
+            var gotWards = []
             var wordIndex
             var thatWordsIndex
             for (wordIndex = words.length - 1; wordIndex >= 0; --wordIndex) {
@@ -96,6 +94,7 @@
                   that.set("words", that.words.reduce(function (a, c) {
                     if (c.toLowerCase() !== words[wordIndex].toLowerCase()) {
                       a.push(c)
+                      gotWards.push(c)
                     }
                     return a
                   }, []))
@@ -104,6 +103,8 @@
                 }               
               }
             }
+            items.push({url: url, words: words, colour: colour, matching: gotWards})
+            that.set("items", items.map(function(x) {return x}))
           })
         })
       }
